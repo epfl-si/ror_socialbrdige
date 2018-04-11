@@ -1,0 +1,33 @@
+%h1=@source.type
+%p= link_to("Back to user", user_path(current_user))
+
+%dl.row
+  - case @source.auth_type
+  - when :oauth
+    %dt.col-sm-3 Uid:
+    %dd.col-sm-9=@source.uid
+  - when :devkey
+    %dt.col-sm-3 Key:
+    %dd.col-sm-9=@source.uid
+
+- unless @requests
+  %p No requests yet
+- else
+  %h3 Requests
+  %table.table
+    %thead
+      %tr
+        %th Link
+        %th Description
+        %th Path/Query
+        %th Selected
+        %th
+    %tbody=render partial: "requests/request", collection: @requests
+  %p= link_to "New Request", new_source_request_path(@source)
+
+- unless @source.public_data.nil?
+  %h2 Data
+  %pre=@source.public_data.to_yaml
+
+
+

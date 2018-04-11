@@ -1,0 +1,4 @@
+= simple_form_for(@source, :as => :source, :url => sources_path ) do |f|
+  = f.input :type, collection: @providers, include_blank: false, label: "Provider"
+  = f.input :uid, label: "Id or Api Key"
+  = f.button :submit

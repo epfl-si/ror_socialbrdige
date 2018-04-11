@@ -1,0 +1,11 @@
+%h1 New request
+
+= simple_form_for [@source, @request], url: :source_requests do |f|
+  = f.input :description
+  = f.input :path
+  = f.input :query
+  = f.input :selection
+  = f.button :submit
+
+- if @source.doc_url
+  %p.float-right=link_to "API Documentation", @source.doc_url, target: "_new"

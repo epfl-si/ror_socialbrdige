@@ -1,0 +1,13 @@
+%h1 Edit request
+
+= simple_form_for @request do |f|
+  = f.input :description
+  = f.input :path
+  = f.input :query
+  = f.input :selection
+  = f.button :submit
+
+
+%h2 Request raw result
+
+%pre=@request.raw_result.to_yaml

@@ -1,0 +1,35 @@
+%h3 Authenticated providers
+%ul
+  - Source.providers.each do |p|
+    - t = p::AUTH_TYPE
+    - s = @sources.where(type: p).first
+    %li
+      = "#{p}:"
+      - if s
+        = "last update: #{s.updated_at}, class: #{s.class}"
+        -# = link_to "forget", source_destroy_path(s)
+        -# = "|"
+        = link_to "details", source_path(s)
+      - else
+        - case t
+        - when :oauth
+          = link_to "Login", "/auth/#{p}"
+        - when :devkey
+          = link_to "Create", new_source_path(provider: p)
+
+- unless @requests
+  %p No requests yet
+- else
+  %h3 requests
+  %table.table
+    %thead
+      %tr
+        %th Link
+        %th Description
+        %th Path/Query
+        %th Selected
+        %th
+    %tbody=render partial: "requests/request", collection: @requests
+
+-# = link_to "New Request", new_request_path(@source)
+

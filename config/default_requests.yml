@@ -1,0 +1,16 @@
+Instagram:
+  - description: "Everything"
+  - description: "Followers count"
+    selection: "graphql user edge_followed_by count"
+  - description: "Following count"
+    selection: "graphql user edge_follow count"
+Facebook:
+  - description: "Friends count"
+    path: "friends"
+    selection: "summary total_count"
+Linkedin:
+  - description: "Owner"
+    path: "people/~"
+  - description: "Connections"
+    path: "people/~:(num-connections)"
+

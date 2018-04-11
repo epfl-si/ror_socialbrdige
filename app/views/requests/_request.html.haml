@@ -1,0 +1,14 @@
+%tr
+  %td=link_to("json", request_query_path(request.token, "json"))
+  %td=request.description
+  %td
+    %pre
+      = "#{request.path}\n#{request.query}"
+  %td
+    %pre=request.short_result
+  %td
+    =link_to("show", request_path(request))
+    = " | "
+    =link_to("edit", edit_request_path(request))
+    = " | "
+    =link_to("duplicate", new_source_request_path(request.source, duplicate: request.id))

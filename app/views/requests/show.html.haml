@@ -1,0 +1,36 @@
+%h1=Request
+
+%p
+  = link_to("Back to source", source_path(@source))
+  = "|"
+  = link_to("Back to user", user_path(current_user))
+
+%h3 Details
+
+%dl.row
+
+  %dt.col-sm-3 Description:
+  %dd.col-sm-9=@request.description
+  %dt.col-sm-3 Provider:
+  %dd.col-sm-9=link_to(@source.type, source_path(@source))
+  %dt.col-sm-3 Public JSON:
+  %dd.col-sm-9=link_to("json", request_query_path(@request.token, "json"))
+
+  %dt.col-sm-3 Path:
+  %dd.col-sm-9=@request.path
+  %dt.col-sm-3 Query:
+  %dd.col-sm-9
+    %pre=@request.query_string.split(" ").join("\n")
+  %dt.col-sm-3 Selection:
+  -if @request.selection.nil? or @request.selection.empty?
+    %dd.col-sm-9
+      No Selection,
+      =link_to("edit", edit_request_path(@request))
+  -else
+    %dd.col-sm-9=@request.selection.split(" ").join(" -> ")
+    %dt.col-sm-3 Selected:
+    %dd.col-sm-9=@request.result
+
+%h3 Raw request result
+%pre=@request.raw_result.to_yaml
+

@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: .
+    working_dir: /myapp
+    command: ./go.sh
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
