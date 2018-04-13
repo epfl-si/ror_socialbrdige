@@ -11,6 +11,7 @@ gem 'cancancan', '~> 2.0'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-google-oauth2'
 gem 'koala'
 
 gem 'haml-rails'

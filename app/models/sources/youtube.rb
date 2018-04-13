@@ -9,5 +9,4 @@ class Youtube < Source
   def doc_url
     "https://developers.google.com/youtube/v3/docs/channels/list"
   end
-
 end

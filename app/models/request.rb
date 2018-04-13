@@ -3,7 +3,7 @@ class Request < ApplicationRecord
   belongs_to :source
   before_create :set_token
 
-  after_create :fetch
+  after_create :fetch!
   serialize :raw_result, JSON
 
   def result
@@ -48,18 +48,44 @@ class Request < ApplicationRecord
     (self.query.nil? or self.query.empty?) ? "" : self.query.split(" ").join("&")
   end
 
+  def expired?
+    self.updated_at < self.agemax.seconds.ago
+  end
+
+  def age
+    (Time.now - self.updated_at).to_i
+  end
+
+  def age_percent
+    f=100.0*(Time.now - self.updated_at)/self.agemax
+    f < 0 ? 0 : ( f > 100 ? 100 : f.to_i)
+  end
+
+
   # TODO: check result!!!
-  def fetch
+  def fetch(force=false)
     # q = (self.query.nil? or self.query.empty?) ?  "" : self.query.split(" ").join("&")
     # p = (self.path.nil? or self.path.empty?) ? "" : self.path
     # url = self.oatoken.url(p, q)
-    if self.source.respond_to?(:fetch)
-      res=self.source.fetch(self.url)
+    if expired? or force
+      if self.source.respond_to?(:fetch)
+        res=self.source.fetch(self.url)
+      else
+        res = `curl '#{self.url}'`
+      end
+      self.raw_result = JSON.parse(res)
+      true
     else
-      res = `curl '#{self.url}'`
+      false
     end
-    self.raw_result = JSON.parse(res)
-    save
+  end
+
+  def fetch!
+    if fetch(true)
+      save
+    else
+      false
+    end
   end
 
   def set_token

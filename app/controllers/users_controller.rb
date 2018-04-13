@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @providers = Source.providers
-    @sources = current_user.sources
+    @sources = current_user.sources.order(:type).includes(:requests)
+    @missing_sources = Source.providers - @sources.map{|s| s.class}
+    # @requests = current_user.requests
   end
 end

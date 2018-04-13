@@ -16,6 +16,24 @@ just modify the `config/database.yml` file accordingly.
 ### Setup
 TODO
 
+In order for the app to work, it have to be registered as application into the
+various social network websites that require oauth authentication
+
+ * Facebook
+  - https://developers.facebook.com/apps
+  - `FACEBOOK_KEY`
+  - `FACEBOOK_SECRET`
+ * Linkedin
+   - https://developer.linkedin.com/my-apps
+   - `LINKEDIN_KEY`
+   - `LINKEDIN_SECRET`
+ * Twitter
+  - https://apps.twitter.com/
+  - `TWITTER_KEY`
+  - `TWITTER_SECRET`
+ * Google
+  -
+
 ## Docker
 The app can also be executed as a Docker container with the usual `docker-compose up`.
 

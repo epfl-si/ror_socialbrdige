@@ -21,5 +21,4 @@ class Twitter < Source
   def public_data
     self.data["raw_info"]
   end
-
 end

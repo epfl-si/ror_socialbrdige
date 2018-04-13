@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :sources
-  has_many :requests, through: :source
+  has_many :requests, through: :sources
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

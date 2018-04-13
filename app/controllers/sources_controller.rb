@@ -36,9 +36,16 @@ class SourcesController < ApplicationController
   end
 
   def show
-    @source = Source.find(params[:id])
+    @source = current_user.sources.find(params[:id])
     @requests = @source.requests
   end
+
+  # # DELETE /sources/1
+  # def destroy
+  #   @request.destroy
+  #   redirect_back(fallback_location: source_path(@source))
+  # end
+
 
 
 end

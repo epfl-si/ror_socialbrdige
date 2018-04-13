@@ -7,8 +7,20 @@
   %td
     %pre=request.short_result
   %td
+    - if request.expired?
+      %bf Expired
+    - else
+      .progress
+        .progress-bar{role: "progressbar", style: "width: #{request.age_percent}%", aria: {valuenow: request.age_percent, valuemax: 100 }}
+
+
+  %td
     =link_to("show", request_path(request))
     = " | "
     =link_to("edit", edit_request_path(request))
     = " | "
+    =link_to("refresh", refresh_request_path(request))
+    = " | "
     =link_to("duplicate", new_source_request_path(request.source, duplicate: request.id))
+    = " | "
+    = link_to("destroy", request_path(request), method: :delete)

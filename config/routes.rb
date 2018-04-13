@@ -10,8 +10,12 @@
     resources :sources, only: [:new, :show, :create, :edit] do
       resources :requests, only: [:new, :create]
     end
-    resources :requests, only: [:show, :edit, :update]
+    resources :requests, only: [:show, :edit, :update, :destroy] do
+      get 'refresh', on: :member
+    end
+
     get '/query/:token', to: 'requests#query', as: "request_query"
+    root to: 'users#index'
   end
   root to: 'users#index'
 end

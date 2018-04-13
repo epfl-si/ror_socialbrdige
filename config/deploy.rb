@@ -43,8 +43,7 @@ set :deploy_to, "/home/#{fetch(:application)}/app_#{fetch(:stage)}"
 # append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', '.bundle'
 
-# No need for this if we use sqlite and env var for secrets but I am used to this
-append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'config/database.yml', 'config/secrets.yml', 'db/production.sqlite3'
 
 # ----------------------------------------------- passenger
 set :passenger_restart_with_touch, true

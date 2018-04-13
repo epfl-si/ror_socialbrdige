@@ -13,4 +13,3 @@ Linkedin:
     path: "people/~"
   - description: "Connections"
     path: "people/~:(num-connections)"
-

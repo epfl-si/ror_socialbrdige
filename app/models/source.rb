@@ -4,12 +4,20 @@ class Source < ApplicationRecord
     self.subclasses
   end
 
+  def self.provider_names
+    self.subclasses.map{|c| c.name}
+  end
+
+  def self.nice_name
+    self.name
+  end
+
   belongs_to :user, :class_name => "User", :foreign_key => "user_id"
   has_many :requests, dependent: :delete_all
 
   validates_associated :user
   serialize :data, JSON
-  validates_inclusion_of :type, :in => Source.providers, :on => :create, :message => "Invalid provider"
+  # validates_inclusion_of :type, :in => Source.provider_names, :on => :create, :message => "Invalid provider"
 
   after_create :create_default_requests
 
@@ -37,9 +45,24 @@ class Source < ApplicationRecord
   def auth_type
     self.class::AUTH_TYPE
   end
+  def provider_name
+    self.class.nice_name
+  end
+
 
   def public_data
     self.auth_type == :oauth ? self.data : nil
+  end
+
+  def public_info
+    self.auth_type == :oauth ? self.data["info"] : nil
+  end
+
+  def expire_at
+    nil
+  end
+  def expired?
+    self.expire_at.nil? ? false : (self.expire_at < DateTime.now.to_i)
   end
 end
 

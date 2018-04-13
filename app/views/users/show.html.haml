@@ -1,35 +1,43 @@
-%h3 Authenticated providers
-%ul
-  - Source.providers.each do |p|
-    - t = p::AUTH_TYPE
-    - s = @sources.where(type: p).first
-    %li
-      = "#{p}:"
-      - if s
-        = "last update: #{s.updated_at}, class: #{s.class}"
-        -# = link_to "forget", source_destroy_path(s)
-        -# = "|"
-        = link_to "details", source_path(s)
-      - else
-        - case t
-        - when :oauth
-          = link_to "Login", "/auth/#{p}"
-        - when :devkey
-          = link_to "Create", new_source_path(provider: p)
 
-- unless @requests
-  %p No requests yet
-- else
-  %h3 requests
-  %table.table
-    %thead
+%h1 Configured sources
+%table.table
+  %thead
+    %tr
+      %th{scope: "col"} Name
+      %th{scope: "col"} Type
+      %th{scope: "col"} Requests
+      %th{scope: "col"} Last update
+      %th{scope: "col"}
+  %tbody
+    - @sources.each do |s|
+      - p = s.class
       %tr
-        %th Link
-        %th Description
-        %th Path/Query
-        %th Selected
-        %th
-    %tbody=render partial: "requests/request", collection: @requests
+        %td=s.provider_name
+        %td=s.auth_type
+        %td=s.requests.count
+        %td.small.text-muted
+          =s.updated_at
+        %td
+          =link_to "Details", source_path(s), class: "btn btn-primary btn-sm float-right"
+          - case s.auth_type
+          - when :oauth
+            - if s.expired?
+              =link_to "Refresh", "#{root_path}/auth/#{p}", class: "btn btn-danger btn-sm"
+            - else
+              =link_to "Refresh", "#{root_path}/auth/#{p}" #, class: "btn btn-secondary btn-sm float-right"
+          - when :devkey
+            =link_to "Edit", "#" #, class: "btn btn-secondary btn-sm float-right"
 
--# = link_to "New Request", new_request_path(@source)
-
+%h3 Unconfigured sources
+%p Click on the name to configure
+%ul
+  -@missing_sources.each do |p|
+    - case p::AUTH_TYPE
+    - when :oauth
+      %li
+        =p.nice_name
+        =link_to "Login", "#{root_path}/auth/#{p}", class: "btn btn-primary btn-sm"
+    - when :devkey
+      %li
+        =p.nice_name
+        =link_to "Create", new_source_path(provider: p), class: "btn btn-primary btn-sm"

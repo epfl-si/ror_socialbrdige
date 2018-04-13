@@ -1,7 +1,24 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!, except: [:query]
-  before_action :set_and_authorize_request, only: [:show, :edit, :update]
+  before_action :set_and_authorize_request, only: [:show, :edit, :update, :refresh, :destroy]
 
+  def query
+    @request = Request.where(token: params[:token]).first
+    respond_to do |format|
+      format.json { render json: @request.result }
+    end
+  end
+
+  def refresh
+    if @request.fetch!
+      flash = { success: "Request data refreshed" }
+    else
+      flash = { error: "Request data could not be refreshed" }
+    end
+    redirect_back(fallback_location: source_path(@source))
+  end
+
+  # ----------------------------------------------------------------------- REST
   def show
   end
 
@@ -44,12 +61,14 @@ class RequestsController < ApplicationController
     end
   end
 
-  def query
-    @request = Request.where(token: params[:token]).first
-    respond_to do |format|
-      format.json { render json: @request.result }
-    end
+  # DELETE /requests/1
+  def destroy
+    @request.destroy
+    redirect_back(fallback_location: source_path(@source))
   end
+
+
+  # ------------------------------------------------------------------ Utilities
 
   def set_and_authorize_request
     @request = Request.find(params[:id])
