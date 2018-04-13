@@ -19,12 +19,15 @@ class RequestsController < ApplicationController
   end
 
   # ----------------------------------------------------------------------- REST
+  # GET /requests/:id
   def show
   end
 
+  # GET /requests/:id/edit
   def edit
   end
 
+  # PUT /requests/:id
   def update
     @request.update_attributes(params['request'].permit([:description, :query, :path, :selection]))
     if @request.save
@@ -61,12 +64,11 @@ class RequestsController < ApplicationController
     end
   end
 
-  # DELETE /requests/1
+  # DELETE /requests/:id
   def destroy
     @request.destroy
     redirect_back(fallback_location: source_path(@source))
   end
-
 
   # ------------------------------------------------------------------ Utilities
 
@@ -75,6 +77,5 @@ class RequestsController < ApplicationController
     @source  = @request.source
     authorize! :manage, @source
   end
-
 
 end
