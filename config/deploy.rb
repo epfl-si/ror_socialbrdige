@@ -2,7 +2,6 @@
 lock "~> 3.10.1"
 
 set :application, "socialbridge"
-set :scm, :git
 set :repo_url, "https://github.com/epfl-idevelop/ror_socialbrdige.git"
 set :deploy_to, "/home/#{fetch(:application)}/app_#{fetch(:stage)}"
 
