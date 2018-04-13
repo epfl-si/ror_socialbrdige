@@ -16,7 +16,7 @@ class SourcesController < ApplicationController
     t.data=data
     puts t.inspect
     if t.save
-      redirect_to user_path(current_user)
+      redirect_to sources_path
     else
       raise "Error"
     end
@@ -43,7 +43,7 @@ class SourcesController < ApplicationController
   def create
     @source = current_user.sources.new(params["source"].permit(["type", "uid", "key"]))
     if @source.save
-      redirect_to user_path(current_user)
+      redirect_to sources_path
     else
       render action: "new"
     end
