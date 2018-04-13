@@ -7,7 +7,7 @@
     get '/auth/:provider/callback', to: 'sources#create_or_update_from_oauth'
     get '/auth/failure', to: redirect('/')
     resources :users, only: [:index, :show]
-    resources :sources, only: [:new, :show, :create, :edit] do
+    resources :sources do
       resources :requests, only: [:new, :create]
     end
     resources :requests, only: [:show, :edit, :update, :destroy] do
@@ -15,7 +15,7 @@
     end
 
     get '/query/:token', to: 'requests#query', as: "request_query"
-    root to: 'users#index'
+    root to: 'sources#index'
   end
-  root to: 'users#index'
+  root to: 'sources#index'
 end

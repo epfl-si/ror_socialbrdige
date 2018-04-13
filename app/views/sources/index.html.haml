@@ -1,4 +1,3 @@
-
 %h1 Configured sources
 %table.table
   %thead
@@ -26,7 +25,7 @@
             - else
               =link_to "Refresh", "#{root_path}/auth/#{p}" #, class: "btn btn-secondary btn-sm float-right"
           - when :devkey
-            =link_to "Edit", "#" #, class: "btn btn-secondary btn-sm float-right"
+            =link_to "Edit", edit_source_path(s) #, class: "btn btn-secondary btn-sm float-right"
 
 %h3 Unconfigured sources
 %p Click on the name to configure
