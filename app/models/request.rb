@@ -73,7 +73,11 @@ class Request < ApplicationRecord
       else
         res = `curl '#{self.url}'`
       end
-      self.raw_result = JSON.parse(res)
+      begin
+        self.raw_result = JSON.parse(res)
+      rescue JSON::ParserError
+        self.raw_result = {}
+      end
       true
     else
       false
