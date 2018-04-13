@@ -16,5 +16,6 @@ module Oac
 
     # This is for prod: in dev we need to require_dependency manually (see source.rb)
     config.autoload_paths.append("#{Rails.root}/app/models/sources")
+    config.assets.prefix = "/socialbridge"
   end
 end
