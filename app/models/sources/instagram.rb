@@ -1,5 +1,5 @@
 class Instagram < Source
-  AUTH_TYPE=:devkey
+  AUTH_TYPE=:key
 
   def url(path="")
     return "https://www.instagram.com/epflcampus/?__a=1"

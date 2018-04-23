@@ -1,12 +1,14 @@
+- content_for :nav do
+  %li.nav-item
+    = link_to "Sources", sources_path, class: "nav-link"
 %h1=@source.type
-%p= link_to("Back to dashboard", sources_path)
 
 %dl.row
   - case @source.auth_type
   - when :oauth
     %dt.col-sm-3 Uid:
     %dd.col-sm-9=@source.uid
-  - when :devkey
+  - when :key
     %dt.col-sm-3 Key:
     %dd.col-sm-9=@source.uid
 
@@ -17,7 +19,7 @@
   %table.table
     %thead
       %tr
-        %th Link
+        %th Api Links
         %th Description
         %th Path/Query
         %th Selected

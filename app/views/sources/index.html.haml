@@ -24,7 +24,7 @@
               =link_to "Refresh", "#{root_path}/auth/#{p}", class: "btn btn-danger btn-sm"
             - else
               =link_to "Refresh", "#{root_path}/auth/#{p}" #, class: "btn btn-secondary btn-sm float-right"
-          - when :devkey
+          - when :key
             =link_to "Edit", edit_source_path(s) #, class: "btn btn-secondary btn-sm float-right"
 
 %h3 Unconfigured sources
@@ -36,7 +36,7 @@
       %li
         =p.nice_name
         =link_to "Login", "#{root_path}/auth/#{p}", class: "btn btn-primary btn-sm"
-    - when :devkey
+    - when :key
       %li
         =p.nice_name
         =link_to "Create", new_source_path(provider: p), class: "btn btn-primary btn-sm"

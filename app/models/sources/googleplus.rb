@@ -1,6 +1,6 @@
 # TODO: can be oauthized: https://developers.google.com/+/web/api/rest/oauth
 class Googleplus < Source
-  AUTH_TYPE=:devkey
+  AUTH_TYPE=:key
 
   def url(path)
     t=self.uid

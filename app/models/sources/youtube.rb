@@ -1,5 +1,5 @@
 class Youtube < Source
-  AUTH_TYPE=:devkey
+  AUTH_TYPE=:key
 
   def url(path)
     t=self.uid
