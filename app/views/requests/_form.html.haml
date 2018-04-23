@@ -1,6 +1,0 @@
-= simple_form_for @request do |f|
-  = f.input :source, collection: @sources.map{|s| [s.type, s.id]}
-  = f.input :description
-  = f.input :path
-  = f.input :query
-  = f.button :submit
