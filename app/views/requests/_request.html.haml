@@ -1,5 +1,8 @@
 %tr
-  %td=link_to("json", request_query_path(request.token, "json"))
+  %td
+    =link_to("get", api_request_path(request.token, "json"))
+    =" | "
+    =link_to("refresh", refresh_api_request_path(request.token, "json"))
   %td=request.description
   %td
     %pre

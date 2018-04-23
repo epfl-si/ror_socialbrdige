@@ -1,0 +1,36 @@
+%html{lang: "end"}
+  %head
+    %title Socialbridge
+    = csrf_meta_tags
+    %meta{charset: "UTF-8"}/
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no" }
+    %meta{name: "description", content: "Cache social network API requests"}
+    %meta{name: "author", content: "Giovanni Cangiani"}
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %nav{class: "navbar navbar-light bg-light navbar-expand-md"}
+      .navbar-brand
+        %img{class: "d-inline-block align-top", src: image_path("logo.svg"), width: "30", height: "30", alt: "Socialbridge logo"}
+        %span{class: "navbar-brand"} Socialbridge
+        %button{class: "navbar-toggler", type: "button", data: {toggle: "collapse", target: "#navbarNavDropdown"}, aria: {controls: "navdd", expande: "false", label: "Toggle navigation"}}
+          %span.navbar-toggler-icon
+      #navdd{class: "collapse navbar-collapse"}
+      %div
+        %ul{class: "navbar-nav mr-auto"}
+          - if user_signed_in?
+            = yield :nav
+            %li.nav-item
+              =link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link"
+          - else
+            %li.nav-item
+              =link_to "Register", new_user_registration_path, class: "nav-link"
+            %li.nav-item
+              =link_to "Login", new_user_session_path, class: "nav-link"
+    %main{class: "container", role: "main"}
+      - if notice
+        %div{class: "alert alert-secondary"}= notice
+      - if alert
+        %div{class: "alert alert-danger"}= alert
+      = yield

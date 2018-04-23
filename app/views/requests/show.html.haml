@@ -13,8 +13,10 @@
   %dd.col-sm-9=@request.description
   %dt.col-sm-3 Provider:
   %dd.col-sm-9=link_to(@source.type, source_path(@source))
-  %dt.col-sm-3 Public JSON:
-  %dd.col-sm-9=link_to("json", request_query_path(@request.token, "json"))
+  %dt.col-sm-3 Public JSON result:
+  %dd.col-sm-9=link_to(api_request_path(@request.token, "json"), api_request_path(@request.token, "json"))
+  %dt.col-sm-3 Public refresh url:
+  %dd.col-sm-9=link_to(refresh_api_request_path(@request.token, "json"), refresh_api_request_path(@request.token, "json"))
 
   %dt.col-sm-3 Path:
   %dd.col-sm-9=@request.path
@@ -30,6 +32,16 @@
     %dd.col-sm-9=@request.selection.split(" ").join(" -> ")
     %dt.col-sm-3 Selected:
     %dd.col-sm-9=@request.result
+  %dt.col-sm-3 Max age:
+  %dd.col-sm-9=@request.agemax
+
+  %dt.col-sm-3 Last Update:
+  %dd.col-sm-9=@request.updated_at
+  %dt.col-sm-3 Expire at:
+  %dd.col-sm-9
+    = @request.expire_at
+    - if @request.expire_at.nil? or @request.expired?
+      = link_to "Refresh", refresh_request_path(@request), class: "btn btn-danger btn-sm"
 
 %h3 Raw request result
 %pre=@request.raw_result.to_yaml

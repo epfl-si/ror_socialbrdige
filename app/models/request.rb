@@ -49,7 +49,7 @@ class Request < ApplicationRecord
   end
 
   def expired?
-    self.updated_at < self.agemax.seconds.ago
+    self.expire_at ? DateTime.now > self.expire_at : (self.updated_at < self.agemax.seconds.ago)
   end
 
   def age
@@ -75,6 +75,7 @@ class Request < ApplicationRecord
       end
       begin
         self.raw_result = JSON.parse(res)
+        self.expire_at = DateTime.now + self.agemax.seconds
       rescue JSON::ParserError
         self.raw_result = {}
       end

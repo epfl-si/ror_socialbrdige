@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180402165655) do
+ActiveRecord::Schema.define(version: 20180420082054) do
 
   create_table "requests", force: :cascade do |t|
     t.string   "token"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20180402165655) do
     t.string   "status"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.datetime "expire_at"
     t.index ["source_id"], name: "index_requests_on_source_id"
     t.index ["token"], name: "index_requests_on_token"
   end
@@ -37,7 +38,8 @@ ActiveRecord::Schema.define(version: 20180402165655) do
     t.datetime "next_check"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.index ["user_id"], name: "index_sources_on_user_id"
+    t.string   "key"
+    t.index ["user_id"], name: "index_oatokens_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,13 +1,7 @@
 class RequestsController < ApplicationController
-  before_action :authenticate_user!, except: [:query]
+  before_action :authenticate_user!, except: [:show_by_token, :refresh_by_token]
   before_action :set_and_authorize_request, only: [:show, :edit, :update, :refresh, :destroy]
-
-  def query
-    @request = Request.where(token: params[:token]).first
-    respond_to do |format|
-      format.json { render json: @request.result }
-    end
-  end
+  respond_to :html
 
   def refresh
     if @request.fetch!
@@ -29,7 +23,7 @@ class RequestsController < ApplicationController
 
   # PUT /requests/:id
   def update
-    @request.update_attributes(params['request'].permit([:description, :query, :path, :selection]))
+    @request.update_attributes(permitted_params)
     if @request.save
       redirect_to source_path(@source)
     else
@@ -55,7 +49,7 @@ class RequestsController < ApplicationController
   def create
     @source  = Source.find(params[:source_id])
     # authorize! :manage, @source
-    @request = @source.requests.new(params["request"].permit([:description, :query, :path, :selection]))
+    @request = @source.requests.new(permitted_params)
     if @request.save
       redirect_to source_path(@source)
     else
@@ -78,4 +72,7 @@ class RequestsController < ApplicationController
     authorize! :manage, @source
   end
 
+  def permitted_params
+    params["request"].permit([:description, :query, :path, :selection, :agemax])
+  end
 end
