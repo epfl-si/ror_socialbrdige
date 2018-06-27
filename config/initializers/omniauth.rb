@@ -5,7 +5,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   root_path="/socialbridge"
   provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], scope: "email,public_profile,user_friends"
   provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
-  provider :linkedin, ENV['LINKEDIN_KEY'], ENV['LINKEDIN_SECRET'] #, :scope => 'r_fullprofile r_emailaddress r_network'
+  provider :linkedin, ENV['LINKEDIN_KEY'], ENV['LINKEDIN_SECRET'], :scope => 'r_fullprofile r_emailaddress r_network'
 
   # https://developers.google.com/identity/protocols/googlescopes
   provider :google_oauth2,   ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'],

@@ -15,7 +15,7 @@
         %td=s.auth_type
         %td=s.requests.count
         %td.small.text-muted
-          =s.updated_at
+          %time{class: "loaded timeago", datetime: "#{s.updated_at}", title: "source last update time"}
         %td
           =link_to "Details", source_path(s), class: "btn btn-primary btn-sm float-right"
           - case s.auth_type
